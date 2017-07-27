@@ -5,7 +5,7 @@ __pycache__/
 .idea/
 # C extensions
 *.so
-
+example_csv/
 # Distribution / packaging
 .Python
 env/
