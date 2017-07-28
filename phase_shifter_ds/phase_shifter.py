@@ -1,6 +1,6 @@
 """This is PhaseShifter device class based on the facadedevice library"""
 
-from facadedevice import Facade, proxy_attribute, logical_attribute
+from facadedevice import Facade, proxy_attribute, logical_attribute, local_attribute
 from tango import AttrWriteType, DevState
 from tango.server import device_property
 import csv
@@ -11,7 +11,7 @@ class PhaseShifter(Facade):
 
     def safe_init_device(self):
         """
-        Docstring for 'safe_init_device' - it is just safe initialization of the DS
+        Docstring for 'safe_init_device' - it is just safe initialization of the DS as well as reading voltages and degrees from conf file
         :return:
         """
         super(PhaseShifter, self).safe_init_device()
@@ -47,33 +47,30 @@ class PhaseShifter(Facade):
                 elif conversionFlagVoltage:
                     self.arrayVoltages.append(row[0])
 
-    # Proxy attribute
-
+    #proxy attribute
     Voltage = proxy_attribute(
         dtype=float,
         property_name="VoltageSource",
-        access=AttrWriteType.READ_WRITE,
-        description="This attribute specifies voltage source"
+        access=AttrWriteType.READ,
+        description="This attribute specifies voltage"
     )
-
-
+    #conf path as a device property
     ConfigurationPath = device_property(dtype=str)
 
     # logical attribute
-
     @logical_attribute(
         dtype=float,
         bind=['Voltage'],
         description="This is an attribute which shows degrees accordingly to data in a .csv configuration")
-    def degrees(self, val):
+    def Degrees(self, val):
         """
-        This changes voltage into degrees accordingly to data in a .csv configuration
+        This attribute changes voltage into degrees accordingly to data in a .csv configuration
         :param val:
         :return:
         """
         for i in range(len(self.arrayVoltages)):
-            if val==self.arrayVoltages:
-                return self.arrayPhaseShifts[i]
+            if float(self.arrayVoltages[i])==val:
+                return float(self.arrayPhaseShifts[i])
 
 
 
