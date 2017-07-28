@@ -43,6 +43,13 @@ DS_NAME DS_INSTANCE
 ```
 **WARNING**: both DS_NAME and DS_INSTANCE must be already declared in database
 
+How to use
+----------
+I recommend using `Jive` as it allows you to monitor your device. At the beggining, simply configure device
+(use *device wizard*) by defining:
+- voltage source
+- path to the configuraction `.csv` file
+
 Requirements
 ------------
 Requirements for this project are:
