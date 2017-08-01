@@ -1,17 +1,25 @@
 """This is PhaseShifter device class based on the facadedevice library"""
 
-from facadedevice import Facade, proxy_attribute, logical_attribute, local_attribute
+from facadedevice import Facade, proxy_attribute, logical_attribute
 from tango import AttrWriteType, DevState
 from tango.server import device_property
 import csv
 
 
 class PhaseShifter(Facade):
-
+    """
+    This PhaseShifter class is based on the facadedevice library.
+    Its main purpose is to change received voltage into degrees accordingly to
+    the data provided in external file. During initialization, data from this file
+    is imported into two lists: one for voltage and one for degrees. In order to
+    do it user has to specify ConfigurationPath (path to the .csv file).
+    Conversion itself is quite simple, it is just a comparison between two lists.
+    """
 
     def safe_init_device(self):
         """
-        Docstring for 'safe_init_device' - it is just safe initialization of the DS as well as reading voltages and degrees from conf file
+        Docstring for 'safe_init_device' - it is just safe initialization of
+        the DS as well as reading voltages and degrees from conf file
         :return:
         """
         super(PhaseShifter, self).safe_init_device()
@@ -52,7 +60,8 @@ class PhaseShifter(Facade):
         dtype=float,
         property_name="VoltageSource",
         access=AttrWriteType.READ,
-        description="This attribute specifies voltage"
+        description="This attribute specifies received voltage which is"
+                    "meant to be changed into degrees"
     )
     #conf path as a device property
     ConfigurationPath = device_property(dtype=str)
@@ -61,10 +70,12 @@ class PhaseShifter(Facade):
     @logical_attribute(
         dtype=float,
         bind=['Voltage'],
-        description="This is an attribute which shows degrees accordingly to data in a .csv configuration")
+        description="This is an attribute which shows degrees accordingly to "
+                    "data in a .csv configuration")
     def Degrees(self, val):
         """
-        This attribute changes voltage into degrees accordingly to data in a .csv configuration
+        This attribute changes voltage into degrees accordingly to data
+        in a .csv configuration
         :param val:
         :return:
         """
