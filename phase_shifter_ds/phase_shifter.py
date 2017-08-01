@@ -8,17 +8,17 @@ import csv
 
 class PhaseShifter(Facade):
     """
-    This PhaseShifter class is based on the facadedevice library.
+    This PhaseShifter class is based on the `facadedevice` library.
     Its main purpose is to change received voltage into degrees accordingly to
     the data provided in external file. During initialization, data from this file
     is imported into two lists: one for voltage and one for degrees. In order to
-    do it user has to specify ConfigurationPath (path to the .csv file).
+    do it user has to specify `ConfigurationPath` (path to the `.csv` file).
     Conversion itself is quite simple, it is just a comparison between two lists.
     """
 
     def safe_init_device(self):
         """
-        Docstring for 'safe_init_device' - it is just safe initialization of
+        Method `safe_init_device` - it is just safe initialization of
         the DS as well as reading voltages and degrees from conf file
         :return:
         """
